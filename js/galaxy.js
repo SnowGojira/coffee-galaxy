@@ -2,6 +2,55 @@
 /**
  * Created by hakuh on 2016/7/9.
  */
+
+/**
+ * preload 预加载
+ * @type {Number}
+ */
+window.onload=function () {
+    manifest = [
+        {src: 'image/aftaste.png', id: 'img1'},
+        {src: 'image/five.png', id: 'img2'},
+        {src: 'image/let.gif', id: 'img3'},
+        {src: 'image/little_star1.gif', id: 'img4'},
+        {src: 'image/little_star1.png', id: 'img5'},
+        {src: 'image/little_star2.png', id: 'img6'},
+        {src: 'image/little_star3.png', id: 'img7'},
+        {src: 'image/little_star4.png', id: 'img8'},
+        {src: 'image/little_star5.png', id: 'img9'},
+        {src: 'image/mondoli.png', id: 'img10'},
+        {src: 'image/new.png', id: 'img11'},
+        {src: 'image/sense.png', id: 'img12'},
+        {src: 'image/uid.gif', id: 'img13'},
+        {src: 'image/um.png', id: 'img14'}
+    ];
+
+    loader = new createjs.LoadQueue(false);
+    // 关键！----设置并发数
+    loader.setMaxConnections(100);
+    // 关键！---一定要将其设置为 true, 否则不起作用。
+    loader.maintainScriptOrder=true;
+    loader.addEventListener('complete', handleComplete);//加载完成 调用handleComplete函数
+    loader.addEventListener('progress', handleFileProgress);//加载完成 调用handleFileProgress函数
+    loader.loadManifest(manifest);
+};
+
+function handleFileProgress() {
+    var percent=loader.progress*100|0+'%';
+    document.getElementById('percent').innerHTML=percent+"%";
+};
+
+var loadscene=document.getElementById("preload");
+var galaxyscene=document.getElementById("galaxy");
+var fivescene=document.getElementById("five");
+
+function handleComplete() {
+    console.log("complete!");
+    loadscene.style.display="none";
+    galaxyscene.style.display="block";
+};
+
+/*******************************************d3-galaxy 首页*************************************/
 var   w =window.innerWidth,
     h =  window.innerHeight,
     circleWidth = 5;
@@ -9,7 +58,7 @@ var   w =window.innerWidth,
 /**
  * This is color palette
  */
-var palette = {
+var galaxy_palette = {
     "lightgray": "#E5E8E8",
     "gray": "#708284",
     "mediumgray":"#303030",
@@ -18,20 +67,8 @@ var palette = {
     "yellow": "#d78f3a"
 }
 
-var colors = ['#EDB296',
-    '#E1611D',
-    '#95AF8D',
-    '#4F2514',
-    '#939A73',
-    '#A05432',
-    '#C6BE8E',
-    '#FDD702',
-    '#BBAAA3'
-];
 
-
-
-var nodes = [
+var galaxy_nodes = [
     { name: "Aftaste Kaffe",value:90,
       'image':'image/aftaste.png'},
     { name: "New School", target: [0], value: 80,
@@ -55,67 +92,62 @@ var nodes = [
 
 
 
-var links = [
+var galaxy_links = [
 ];
 
-for (var i = 0; i < nodes.length; i++){
-    if (nodes[i].target !== undefined) {
-        for ( var x = 0; x < nodes[i].target.length; x++ )
-            links.push({
-                source: nodes[i],
-                target: nodes[nodes[i].target[x]]
+for (var i = 0; i < galaxy_nodes.length; i++){
+    if (galaxy_nodes[i].target !== undefined) {
+        for ( var x = 0; x < galaxy_nodes[i].target.length; x++ )
+            galaxy_links.push({
+                source: galaxy_nodes[i],
+                target: galaxy_nodes[galaxy_nodes[i].target[x]]
             });
     };
 };
 
 
-var myChart = d3.select('#galaxy')
-    //.append("div")
-    //.classed("svg-container", true)
+var galaxyChart = d3.select('#galaxy')
     .append('svg')
-    //.append('width',w)
-    //.append('height',h)
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", "0 0 410 730")
-    //.classed("svg-content-responsive", true)
 
 
-var force = d3.layout.force()
-    .nodes(nodes)
+var galaxy_force = d3.layout.force()
+    .nodes(galaxy_nodes)
     .links([])
     .gravity(0.1)
     .charge(-550)
     .size([w,h]);
 
-var link = myChart.selectAll('line')
-    .data(links).enter().append('line')
-    .attr('stroke', palette.mediumgray)
+var galaxy_link = galaxyChart.selectAll('line')
+    .data(galaxy_links).enter().append('line')
+    .attr('stroke', galaxy_palette.mediumgray)
     .attr('strokewidth', '0.3');
 
-var node = myChart.selectAll(".node")
-    .data(force.nodes())
+var galaxy_node = galaxyChart.selectAll(".node")
+    .data(galaxy_force.nodes())
     .enter().append("g")
     .attr("class", "node")
-    .call(force.drag)
+    .call(galaxy_force.drag)
 
 
 
 
-node.append("image")
+galaxy_node.append("image")
     .attr("xlink:href", function (d,i) {
-        return nodes[i].image;
+        return galaxy_nodes[i].image;
     })
     .attr("x", function (d,i) {
-        return -nodes[i].value/2;
+        return -galaxy_nodes[i].value/2;
     })
     .attr("y", function (d,i) {
         if(i==5){
-            return -20-nodes[i].value/2;
+            return -20-galaxy_nodes[i].value/2;
         }else if(i==8){
-            return -18-nodes[i].value/2;
+            return -18-galaxy_nodes[i].value/2;
         }
         else{
-            return -nodes[i].value/2;
+            return -galaxy_nodes[i].value/2;
         }
 
     })
@@ -129,9 +161,6 @@ node.append("image")
                 window.location.href='new.html';
                 break;
             case 2:
-
-                /*galaxyScene.style.display='none';
-                fiveScene.style.display='block';*/
                 window.location.href='five.html';
                 break;
             case 3:
@@ -159,93 +188,18 @@ node.append("image")
 
     })
     .attr("width", function(d,i){
-        return nodes[i].value;
+        return galaxy_nodes[i].value;
     })
     .attr("height", function(d,i){
-        return nodes[i].value;});
-
-/*
-var node =  myChart.selectAll('circle')
-    .data(nodes).enter()
-    .append('g')
-    .call(force.drag);
-*/
+        return galaxy_nodes[i].value;});
 
 
-
-/*
-node.append('circle')
-    .attr('cx', function(d){return d.x; })
-    .attr('cy', function(d){return d.y; })
-    .attr('r', function(d,i){
-        console.log(d.value);
-        if ( i > 0 ) {
-            return circleWidth + d.value;
-        } else {
-            return circleWidth + 35;
-        }
-    })
-    .append("image")
-    .attr("xlink:href", function(d, i){
-        return nodes[i].image;
-    })
-    .attr('fill', function(d,i){
-        switch (i){
-            case 0:
-                return '#fe506c';
-                break;
-            case 1:
-                return '#f8a41a';
-                break;
-            case 2:
-                return    '#b8c247';
-                break;
-            case 3:
-                return    '#e2d1e9';
-                break;
-            case 4:
-                return    '#f59162';
-                break;
-            case 5:
-                return    '#b8b1f3';
-                break;
-            case 6:
-                return    '#52366a';
-                break;
-            case 7:
-                return    '#FDD702';
-                break;
-            case 8:
-                return    '#71c3f8';
-                break;
-            default:
-                return '#fff'
-                break;
-        }
-
-    })
-    .attr('strokewidth', function(d,i){
-        if ( i > 0 ) {
-            return '0';
-        } else {
-            return '2.5';
-        }
-    })
-    .attr('stroke', function(d,i){
-        if ( i > 0 ) {
-            return '';
-        } else {
-            return 'black';
-        }
-    });
-*/
-
-force.on('tick', function(e){
-    node.attr('transform', function(d, i){
+galaxy_force.on('tick', function(e){
+    galaxy_node.attr('transform', function(d, i){
         return 'translate(' + d.x + ','+ d.y + ')'
     })
 
-    link
+    galaxy_link
         .attr('x1', function(d){ return d.source.x; })
         .attr('y1', function(d){ return d.source.y; })
         .attr('x2', function(d){ return d.target.x; })
@@ -253,21 +207,20 @@ force.on('tick', function(e){
 });
 
 
-node.append('text')
+galaxy_node.append('text')
     .text(function(d){ return d.name; })
-    .attr('font-family', 'Raleway','Times New Roman','微软雅黑')
+    .attr('font-family', 'Arial','微软雅黑')
     .attr('fill', function(d, i){
         //console.log(d.value);
-
         if ( i ===5) {
-            return palette.orange;
+            return galaxy_palette.orange;
         }else if(i===7){
-            return palette.black;
+            return galaxy_palette.black;
         }else if(i==8){
-            return palette.black;
+            return galaxy_palette.black;
         }
         else {
-            return palette.lightgray;
+            return galaxy_palette.lightgray;
         }
     })
     .attr('text-align',function (d,i) {
@@ -285,20 +238,10 @@ node.append('text')
         }
     })
 
-/*node.append('onClick')
-    .onclick(function(d,i){
-        switch(i){
-            case 0:
-                break;
-            case 1:
-                break;
-            default:
-                break;
-        }
-    })*/
 
-force.start();
+galaxy_force.start()
 
+/***********************************************d3-five-page****************************/
 
 
 

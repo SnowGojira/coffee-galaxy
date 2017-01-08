@@ -5,25 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Assemble | Coffee Galaxy</title>
     <link type="text/css" href="css/load.css" rel="stylesheet">
+    <link type="text/css" href="css/style.css" rel="stylesheet">
     <script src ="js/d3.v3.min.js"></script>
+    <script src="js/preloadjs-0.6.2.min.js"></script>
 </head>
 <body>
-  <div class="center" id="preload">
-    <div class="loader">
-        <div class="dot"></div>
-        <div class="dot"></div>
-    </div>
-    <div class="text">Assemble</div>
-    <div id="percentage">0%</div>
+<body>
+<div id="preload">
+    <img src="image/preload.gif" alt="Assemble" id="logo">
+    <div id="percent">100%</div>
 </div>
+</body>
 
-  <div id="galaxy" style="display: none">
-      <div style="color: #eee;text-align: center;position: absolute;font-family:'Arial';font-size: 0.5rem;bottom: 10px;left: auto">Assemble \ Coffee</div>
-  </div>
-
-  <script src = "js/gal.js"></script>
-  <!--<script src = "js/galaxy.js"></script>
-  <script src="js/preload.js"></script>-->
+  <div class="coffee" id="galaxy"></div>
+  <script src = "js/galaxy.js"></script>
 
 </body>
 </html>

@@ -11,7 +11,7 @@ var fontFamily = 'Bree Serif',
     fontSizeNormal = '1em';
 
 
-var palette = {
+var five_palette = {
     "lightgray": "#2a2a2a",
     "gray": "#708284",
     "mediumgray": "#536870",
@@ -32,7 +32,7 @@ var palette = {
     "yellowgreen": "#738A05"
 }
 
-var nodes = [
+var five_nodes = [
     {"name": "Five elephant",value:35 ,
      'image':'image/little_star1.gif'},
     {"name": "来自柏林",value:30,
@@ -47,38 +47,38 @@ var nodes = [
      'image':'image/little_star5.png'}
 ]
 
-var links = [
-    {source: nodes[1], target: nodes[0]},
-    {source: nodes[2], target: nodes[0]},
-    {source: nodes[3], target: nodes[0]},
-    {source: nodes[4], target: nodes[0]},
-    {source: nodes[5], target: nodes[0]}
+var five_links = [
+    {source: five_nodes[1], target: five_nodes[0]},
+    {source: five_nodes[2], target: five_nodes[0]},
+    {source: five_nodes[3], target: five_nodes[0]},
+    {source: five_nodes[4], target: five_nodes[0]},
+    {source: five_nodes[5], target: five_nodes[0]}
 ]
 
 
-var vis = d3.select('body')
+var five_vis = d3.select('body')
     .append("svg")
     .attr("class", "stage")
     .attr("width", w)
     .attr("height", h);
 
 
-var force = d3.layout.force()
-    .nodes(nodes)
+var five_force = d3.layout.force()
+    .nodes(five_nodes)
     .links([])
     .gravity(0.1)
     .charge(-1000)
     .size([w, h]);
 
-var link = vis.selectAll(".link")
-    .data(links)
+var five_link = five_vis.selectAll(".link")
+    .data(five_links)
     .enter().append("line")
     .attr("class", "link")
-    .attr("stroke", palette.lightgray)
+    .attr("stroke", five_palette.lightgray)
     .attr("fill", "none");
 
-var node = vis.selectAll(".node")
-    .data(nodes)
+var five_node = five_vis.selectAll(".node")
+    .data(five_nodes)
     .enter().append("g")
     .attr("class", "node")
     .on("click",function(d,i){
@@ -86,107 +86,52 @@ var node = vis.selectAll(".node")
             window.location.href='https://fiveelephant.taobao.com/?spm=2013.1.1000126.2.dR8V4R';
         }
     })
-    //MOUSEOVER
-    /*.on("mouseover", function(d,i) {
-        if (i>0) {
-            //CIRCLE
-            d3.select(this).selectAll("circle")
-                .transition()
-                .duration(250)
-                .style("cursor", "none")
-                .attr("r", circleWidth+3)
-                .attr("fill",palette.orange);
 
-            //TEXT
-            d3.select(this).select("text")
-                .transition()
-                .style("cursor", "none")
-                .duration(250)
-                .style("cursor", "none")
-                .attr("font-size","1.5em")
-                .attr("x", 15 )
-                .attr("y", 5 )
-        } else {
-            //CIRCLE
-            d3.select(this).selectAll("circle")
-                .style("cursor", "none")
 
-            //TEXT
-            d3.select(this).select("text")
-                .style("cursor", "none")
-        }
-    })*/
+    .call(five_force.drag);
 
-    //MOUSEOUT
-    /*.on("mouseout", function(d,i) {
-        if (i>0) {
-            //CIRCLE
-            d3.select(this).selectAll("circle")
-                .transition()
-                .duration(250)
-                .attr("r", circleWidth)
-                .attr("fill",palette.pink);
-
-            //TEXT
-            d3.select(this).select("text")
-                .transition()
-                .duration(250)
-                .attr("font-size","1em")
-                .attr("x", 8 )
-                .attr("y", 4 )
-        }
-    })*/
-
-    .call(force.drag);
-
-node.append("svg:image")
+five_node.append("svg:image")
     .attr("xlink:href", function (d,i) {
-        return nodes[i].image;
+        return five_nodes[i].image;
     })
     .attr("x", function (d,i) {
-        return -nodes[i].value/2;
+        return -five_nodes[i].value/2;
     })
     .attr("y", function (d,i) {
 
-            return -nodes[i].value/2;
+            return -five_nodes[i].value/2;
 
     })
     .attr("width", function(d,i){
-        return nodes[i].value;
+        return five_nodes[i].value;
     })
     .attr("height", function(d,i){
-        return nodes[i].value;})
+        return five_nodes[i].value;})
     .on("click",function (d,i) {
         window.location.href="http://www.dianping.com/shop/66671047";
     });
-//CIRCLE
-/*node.append("svg:circle")
-    .attr("cx", function(d) { return d.x; })
-    .attr("cy", function(d) { return d.y; })
-    .attr("r", circleWidth)
-    .attr("fill", function(d, i) { if (i>0) { return  palette.pink; } else { return palette.paleryellow } } )*/
 
 //TEXT
-node.append("text")
+five_node.append("text")
     .text(function(d, i) { return d.name; })
     .attr("x",            function(d, i) { if (i>0) { return circleWidth + 5; }   else { return -10 } })
     .attr("y",            function(d, i) { if (i>0) { return circleWidth + 0 }    else { return 8 } })
     .attr("font-family",  "Bree Serif")
-    .attr("fill",         function(d, i) { if (i>0) { return  palette.paleryellow; }        else { return palette.darkblue } })
+    .attr("fill",         function(d, i) { if (i>0) { return  five_palette.paleryellow; }        else { return five_palette.darkblue } })
     .attr("font-size",    function(d, i) { if (i>0) { return  "1em"; }            else { return "1.8em" } })
     .attr("text-anchor",  function(d, i) { if (i>0) { return  "beginning"; }      else { return "end" } })
 
 
 
-force.on("tick", function(e) {
-    node.attr("transform", function(d, i) {
+five_force.on("tick", function(e) {
+    five_node.attr("transform", function(d, i) {
         return "translate(" + d.x + "," + d.y + ")";
     });
 
-    link.attr("x1", function(d)   { return d.source.x; })
+    five_link.attr("x1", function(d)   { return d.source.x; })
         .attr("y1", function(d)   { return d.source.y; })
         .attr("x2", function(d)   { return d.target.x; })
         .attr("y2", function(d)   { return d.target.y; })
 });
 
-force.start();
+five_force.start();

@@ -1,160 +1,31 @@
-@import url(https://fonts.googleapis.com/css?family=Cutive+Mono);
-body {
-    background: #000;
+/*引入自定义字体*/
+@font-face {
+    font-family: Percent;
+    src: url('../asset/Gill_num.ttf');
+    /* IE9 Compat Modes */ src: url('../asset/Gill_num.ttf') format('embedded-opentype'),
+    /* IE6-IE8 */ url('../asset/Gill_num.ttf') format('woff'),
+    /* Modern Browsers */ url('../asset/Gill_num.ttf') format('truetype'),
+    /* Safari, Android, iOS */ url('../asset/Gill_num.ttf') format('svg');
+    /* Legacy iOS */
 }
-
-.center {
-    display: inline-block;
-    -webkit-transform: translate(calc(-50% + 50vw), calc(-50% + 50vh));
-    transform: translate(calc(-50% + 50vw), calc(-50% + 50vh));
-    -webkit-filter: contrast(3);
-    filter: contrast(3);
+html,body{
+    margin:0;
+    padding:0;
+    border:0;
 }
-
-.loader {
-    background: #000;
-    font-size: 0;
-    padding: 60px;
+#preload{
+    width: 100vw;
+    height: 100vh;
+    background: #0b0b1c;
     text-align: center;
-    position: relative;
-    width: 100px;
-    top:-160px;
 }
-
-.text {
-    -webkit-animation: b 5s infinite;
-    animation: b 5s infinite;
-    color: #2ff;
-    font-size: 35px;
-    font-family: "Cutive Mono","Arial";
-    line-height: 145px;
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    top: -160px;
+#logo{
+    width: 19vw;
+    height: auto;
+    margin-top: 32.7vh;
 }
-
-#percentage{
-    color: #2ff;
-    font-size: 1rem;
-    font-family: "Cutive Mono","Arial";
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    top: -45px;
-}
-
-.dot {
-    border-radius: 10px;
-    display: inline-block;
-    -webkit-filter: blur(10px);
-    filter: blur(10px);
-    height: 25px;
-    width: 25px;
-}
-.dot:first-child {
-    -webkit-animation: fc 10s ease infinite;
-    animation: fc 10s ease infinite;
-    float: left;
-}
-.dot:last-child {
-    -webkit-animation: lc 10s ease infinite;
-    animation: lc 10s ease infinite;
-    margin-left: -20px;
-}
-
-@-webkit-keyframes fc {
-    0% {
-        background: #ddf;
-        -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
-    }
-    25% {
-        background: #1d2;
-    }
-    50% {
-        background: #aaf;
-        -webkit-transform: translate3d(80px, 0, 0);
-        transform: translate3d(80px, 0, 0);
-    }
-    100% {
-        background: #ddf;
-        -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-@keyframes fc {
-    0% {
-        background: #ddf;
-        -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
-    }
-    25% {
-        background: #1d2;
-    }
-    50% {
-        background: #aaf;
-        -webkit-transform: translate3d(80px, 0, 0);
-        transform: translate3d(80px, 0, 0);
-    }
-    100% {
-        background: #ddf;
-        -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
-    }
-}
-@-webkit-keyframes lc {
-    0% {
-        background: #3fd;
-    }
-    25% {
-        background: #4df;
-    }
-    50% {
-        background: #12d;
-    }
-    75% {
-        background: #4df;
-    }
-    100% {
-        background: #3fd;
-    }
-}
-@keyframes lc {
-    0% {
-        background: #3fd;
-    }
-    25% {
-        background: #4df;
-    }
-    50% {
-        background: #12d;
-    }
-    75% {
-        background: #4df;
-    }
-    100% {
-        background: #3fd;
-    }
-}
-@-webkit-keyframes b {
-    0%, 100% {
-        -webkit-filter: blur(5px);
-        filter: blur(5px);
-    }
-    50% {
-        -webkit-filter: blur(1.5px);
-        filter: blur(1.5px);
-    }
-}
-@keyframes b {
-    0%, 100% {
-        -webkit-filter: blur(5px);
-        filter: blur(5px);
-    }
-    50% {
-        -webkit-filter: blur(1.5px);
-        filter: blur(1.5px);
-    }
+#percent{
+    font-family: Percent, Arail;
+    color: #fff;
+    font-size: 0.88rem;
 }
