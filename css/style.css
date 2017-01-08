@@ -1,0 +1,16 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:400);
+body{
+    //background:#1C160B;
+    //background: #ffffff;
+    background: #000;
+}
+
+h1{font: 400 1.5em/1.2em "微软雅黑 Light","Raleway", "Helvetica Neue", Helvetica, sans-serif;
+    text-align:center;}
+
+a{
+    color: #fff;
+    font-size: 1rem;
+    font-family: Arial;
+    text-align: center;
+}
